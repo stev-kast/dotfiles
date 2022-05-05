@@ -183,7 +183,7 @@ layouts = [
     #layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
-    layout.Bsp(border_focus="#d3d3d3", border_width=1,margin=6),
+    layout.Bsp(border_focus="#d3d3d3", border_width=1,margin=4),
     # layout.Matrix(),
     # layout.MonadTall(),
     # layout.MonadWide(),
@@ -224,7 +224,7 @@ screens = [
                     background=colors["main"])
             ],
             22,
-             border_width=[6, 0, 0, 0],  # Draw top and bottom borders
+             border_width=[4, 0, 0, 0],  # Draw top and bottom borders
              border_color="#00ff0000",  # Borders are transparent, must include next line background with transparent color
              background="#ff0000.0"
         ),

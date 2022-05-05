@@ -8,7 +8,8 @@ paths=[
 "~/.config/alacritty",
 "~/.config/git",
 "~/.config/qtile",
-"~/.config/qutebrowser"]
+"~/.config/qutebrowser",
+"~/.config/nvim"]
 
 home_path = os.path.expanduser('~')
 
@@ -31,7 +32,6 @@ for i in paths:
             
             shutil.copytree(whole_path,os.getcwd()+'/'+dirs_path+os.path.split(i)[-1])
         else:
-            print(whole_path)
             shutil.copy(whole_path,os.getcwd()+'/'+dirs_path+os.path.split(i)[-1])
 
 
