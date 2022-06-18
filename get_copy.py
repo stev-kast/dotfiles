@@ -2,13 +2,12 @@ import shutil
 import os.path
 
 paths=[
-"~/.bashrc",
-"~/.config/git/git-completion.sh",
-"~/.config/git/git-prompt.sh",
 "~/.config/alacritty",
+"~/.config/kitty",
 "~/.config/git",
 "~/.config/qtile",
-"~/.config/qutebrowser",
+"~/.config/coc",
+"~/.config/rofi",
 "~/.config/nvim"]
 
 home_path = os.path.expanduser('~')

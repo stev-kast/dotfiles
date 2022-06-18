@@ -1,23 +1,38 @@
 set number          " This sets numbers on every row
-set relativenumber	" This makes numbers relative to active line
-set autoindent 		" This helps ident next new line 
+"set relativenumber	" This makes numbers relative to active line
+set autoindent  	" This helps ident next new line 
 set tabstop=4		" Every tab is 4 spaces ?
 set shiftwidth=4	" ?
 set smarttab		" ?
 set softtabstop		" ?
-set mouse=a		" You can use the mouse with this option
+set mouse=a			" You can use the mouse with this option
+set sessionoptions-=blank
+
 
 call plug#begin()
-Plug 'https://github.com/vim-airline/vim-airline'		" The status bar at bottom
+Plug 'https://github.com/itchyny/lightline.vim'		    " The status bar at bottom
 Plug 'https://github.com/preservim/nerdtree'			" The tab at left open with Ctrl+t
 Plug 'https://github.com/ryanoasis/vim-devicons'		" Check what is this for	
-Plug 'https://github.com/preservim/tagbar' 				" The bat at right, code navigation
-Plug 'https://github.com/neoclide/coc.nvim'				" The autocomplet function
+Plug 'https://github.com/preservim/tagbar' 				" The bar at right, code navigation
+Plug 'https://github.com/neoclide/coc.nvim'				" The autocompletion function
 Plug 'https://github.com/rafi/awesome-vim-colorschemes'	" Color schemes for vim
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' } 		" Custom theme
+Plug 'https://github.com/romgrk/barbar.nvim' 			" Tabs manager
+Plug 'https://github.com/kyazdani42/nvim-web-devicons' 	" Dependency for previous pluging: barbar
+Plug 'https://github.com/sheerun/vim-polyglot' 			" Syntax highlight
+Plug 'https://github.com/vim-autoformat/vim-autoformat' " Code formater for Vim
+Plug 'https://github.com/tpope/vim-commentary'          " Code commenting with gcc and gc
+Plug 'https://github.com/tpope/vim-surround'            " Add symbols around selected text, learn to use it! :v
+Plug 'https://github.com/mg979/vim-visual-multi'        " Multiple line selection and other functions, learn to use it!
+Plug 'nvim-lua/plenary.nvim'                            " Dependency for Telescope
+Plug 'nvim-telescope/telescope.nvim'                    " File finder
+Plug 'https://github.com/lukas-reineke/indent-blankline.nvim' " show vertical lines on identation
 call plug#end()
 
-nnoremap <C-t> :NERDTreeToggle <CR>
-nnoremap <C-n> :Tagbar <CR>
+colorscheme tokyonight
+
+nnoremap <C-a> :NERDTreeToggle <CR>
+nnoremap <C-l> :Tagbar <CR>
 
 " -------------- CONFIG FOR COC -----------------------------
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
@@ -32,7 +47,7 @@ set nobackup
 set nowritebackup
 
 " Give more space for displaying messages.
-set cmdheight=2
+"set cmdheight=2
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -47,7 +62,7 @@ if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
   set signcolumn=number
 else
-  set signcolumn=yes
+  set signcoumn=yes
 endif
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -187,3 +202,44 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " -------------- FINAL OF CONFIG FOR COC ---------------------
+"
+" --------------- CONFIG FOR BARBAR ----------------------------
+" Move to previous/next
+nnoremap <silent>    <A-,> :BufferPrevious<CR>
+nnoremap <silent>    <A-.> :BufferNext<CR>
+" Re-order to previous/next
+nnoremap <silent>    <A-<> :BufferMovePrevious<CR>
+nnoremap <silent>    <A->> :BufferMoveNext<CR>
+" Goto buffer in position...
+nnoremap <silent>    <A-1> :BufferGoto 1<CR>
+nnoremap <silent>    <A-2> :BufferGoto 2<CR>
+nnoremap <silent>    <A-3> :BufferGoto 3<CR>
+nnoremap <silent>    <A-4> :BufferGoto 4<CR>
+nnoremap <silent>    <A-5> :BufferGoto 5<CR>
+nnoremap <silent>    <A-6> :BufferGoto 6<CR>
+nnoremap <silent>    <A-7> :BufferGoto 7<CR>
+nnoremap <silent>    <A-8> :BufferGoto 8<CR>
+nnoremap <silent>    <A-9> :BufferLast<CR>
+" Pin/unpin buffer
+nnoremap <silent>    <A-p> :BufferPin<CR>
+" Close buffer
+nnoremap <silent>    <A-c> :BufferClose<CR>
+" Wipeout buffer
+"                          :BufferWipeout<CR>
+" Close commands
+"                          :BufferCloseAllButCurrent<CR>
+"                          :BufferCloseAllButPinned<CR>
+"                          :BufferCloseBuffersLeft<CR>
+"                          :BufferCloseBuffersRight<CR>
+" Magic buffer-picking mode
+nnoremap <silent> <C-s>    :BufferPick<CR>
+" Sort automatically by...
+nnoremap <silent> <Space>bb :BufferOrderByBufferNumber<CR>
+nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
+nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
+nnoremap <silent> <Space>bw :BufferOrderByWindowNumber<CR>
+
+" Other:
+" :BarbarEnable - enables barbar (enabled by default)
+" :BarbarDisable - very bad command, should never be used
+" --------------- FINAL OF CONFIG FOR BARBAR --------------------

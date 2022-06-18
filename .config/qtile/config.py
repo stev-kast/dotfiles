@@ -34,16 +34,15 @@ from libqtile.utils import guess_terminal
 mod = "mod4"
 terminal = guess_terminal()
 
-
 # Reference https://materialui.co/flatuicolors/
 colors = {
-        "main":"#3498DB",
-        "secondary":"#8E44AD",
-        "dark":"#2C3E50",
-        "gray":"#808080",
-        "black":"#000000",
-        "white":"#ffffff"
-    }
+    "main":"#3498DB",
+    "secondary":"#8E44AD",
+    "dark":"#2C3E50",
+    "gray":"#808080",
+    "black":"#000000",
+    "white":"#ffffff"
+}
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -77,10 +76,10 @@ keys = [
     #     lazy.layout.toggle_split(),
     #     desc="Toggle between split and unsplit sides of stack",
     # ),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "Return", lazy.spawn("kitty"), desc="Launch terminal"),
     # Go to last visited group
     Key([mod], "Tab", lazy.screen.toggle_group(), desc="Go to last visited group"),
-    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod, "shift"], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
@@ -88,8 +87,8 @@ keys = [
     # Stev Custom Keys
     Key(
         [mod],
-        "d",
-        lazy.spawn("rofi -show run -i"),
+        "m",
+        lazy.spawn("rofi -show drun -i"),
         desc="Toggle between split and unsplit sides of stack",
     ),
     # Brightness
@@ -98,12 +97,26 @@ keys = [
         "XF86MonBrightnessDown",
         lazy.spawn("brightnessctl set 10%-")
     ),
+    # Down for 60% keyboard
+    Key(
+        [mod, "control"],
+        "9",
+        lazy.spawn("brightnessctl set 10%-")
+    ),
     Key(
         [],
         "XF86MonBrightnessUp",
         lazy.spawn("brightnessctl set 10%+")
     ),
-    # Volume 
+    # UP for 60% keyboard
+    Key(
+        [mod, "control"],
+        "0",
+        lazy.spawn("brightnessctl set 10%+")
+    ),
+
+
+    # Volume
     Key(
         [],
         "XF86AudioLowerVolume",
@@ -120,10 +133,33 @@ keys = [
         lazy.spawn("amixer set Master toggle")
     ),
 
-    # APPS 
-    Key([mod],"b", lazy.spawn("qutebrowser")),
+    # Volume for 60% keyboard
+    Key(
+        [mod,"control"],
+        "2",
+        lazy.spawn("amixer set Master 5%-")
+    ),
+    Key(
+        [mod,"control"],
+        "3",
+        lazy.spawn("amixer set Master 5%+")
+    ),
+    Key(
+        [mod,"control"],
+        "1",
+        lazy.spawn("amixer set Master toggle")
+    ),
+    # Hide bar
+    Key(
+        [mod],
+        "z",
+        lazy.hide_show_bar("top")
+    ),
+
+    # APPS
+    Key([mod],"b", lazy.spawn("vieb")),
     Key([mod],"p", lazy.spawn("rofi-pass")),
-    # Layout modes 
+    # Layout modes
     Key([mod,"control"], "space", lazy.window.toggle_floating(), lazy.window.center()),
 
     #Key([mod],"R", lazy.window.disable_floating())
@@ -139,14 +175,17 @@ keys = [
 ]
 
 groups = [
-    Group("1", label=""),
-    Group("2", label=""),
-    Group("3", label=""),
-    Group("4", label=""),
-    Group("5", label=""),
-    Group("6", label=""),
-    Group("7", label="")
-    ]
+    Group("1"),#, label="1. "),
+    Group("2"),#, label="2. "),
+    Group("3"),#, label="3. "),
+    Group("4"),#, label="4. "),
+    Group("5"),#, label="5. "),
+    Group("6"),#, label="6. "),
+    Group("7"),#, label="7. "),
+    Group("8"),#, label="8. "),
+    Group("9"),#, label="9. "),
+    # Group("10", label=""),
+]
 
 
 for i in groups:
@@ -170,9 +209,9 @@ for i in groups:
             # # mod1 + shift + letter of group = move focused window to group
             # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
             #     desc="move focused window to group {}".format(i.name)),
-            
+
             # Custom go to group -----
-            Key([mod],"s", lazy.screen.next_group() ),
+            Key([mod],"d", lazy.screen.next_group() ),
             Key([mod],"a", lazy.screen.prev_group() )
 
         ]
@@ -207,26 +246,25 @@ screens = [
             [
                 #widget.CurrentLayout(),
                 widget.GroupBox(
-                    background=colors["dark"],
-                    inactive=colors["secondary"],
-                    active=colors["white"],
-                    highlight_method='line',
-                    highlight_color=[colors["main"]]
+                    #background=colors["dark"],
+                    #inactive=colors["secondary"],
+                    #active=colors["white"],
+                    #highlight_method='line',
+                    #highlight_color=[colors["main"]]
                 ),
                 widget.Prompt(),
-                widget.WindowName(background=colors["dark"]),
-                #widget.PulseVolume(background=colors["main"]),
+                widget.WindowName(),#background=colors["dark"]),
                 widget.Systray(),
-                #widget.Net(interface="wlan0", format='{down} ↓↑ {up}'),
-                widget.Battery(format='{percent:2.0%}',background=colors["secondary"]),
+                #widget.Volume(background=colors["main"]), # Volume set up causes a really long delay on start up
+                widget.Battery(format='{percent:2.0%}'),#,background=colors["secondary"]),
                 widget.Clock(
                     format="%d-%m-%Y %a %I:%M %p",
-                    background=colors["main"])
+                ),#background=colors["main"])
             ],
-            22,
-             border_width=[4, 0, 0, 0],  # Draw top and bottom borders
-             border_color="#00ff0000",  # Borders are transparent, must include next line background with transparent color
-             background="#ff0000.0"
+            18,
+            # border_width=[4, 0, 0, 0],  # Draw top and bottom borders
+            border_color="#00ff0000",  # Borders are transparent, must include next line background with transparent color
+            background="#ff0000.0"
         ),
     ),
 ]
